@@ -42,18 +42,20 @@
                 "url": '/Home/GetAlbumsDetail?id=' + id,
                 "type": "get",
                 "datatype": "json",
-                "cache": "true"                
+                "cache": "true"
             },
             "columns": [
-                { "data": "title", "autoWidth": true },
-                { "data": "thumbnailUrl", "autoWidth": true },
+                { "data": "title", "width": "50%" },
+                {
+                    "data": "thumbnailUrl", "autoWidth": true, "render": function (data) {                      
+                        return '<img class="img-thumbnail" src="' + data + '">';
+                    }                        
+                },
                 {
                     "data": "albumId", "autoWidth": true, "render": function (data) {
-                       // var url = finder.getAppFile('inmuebles/edit/' + data);
                         var url = '/Home/Comments/' + data;
-               
-                        return '<a class="btn btn-table" href= ' + url + '>Ver Comentarios</a>';
-                           }
+                        return '<a class="btn btn-table" href= ' + url + '><strong>Ver Comentarios</strong></a>';
+                    }
                 }
             ]
         });

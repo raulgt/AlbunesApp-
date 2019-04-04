@@ -27,14 +27,11 @@ namespace AlbunesApp.Controllers
             return View();
         }
 
-
-
-
+               
         public async Task<JsonResult> GetAlbumsDetail(int id)
         {
             List<AlbumDetail> albumDetailList = new List<AlbumDetail>();
             albumDetailList = await service.AlbumsDetailListAsync();
-
             albumDetailList = albumDetailList.Where(x => x.albumId == id).ToList();
             return Json(new { data = albumDetailList }, JsonRequestBehavior.AllowGet);
         }

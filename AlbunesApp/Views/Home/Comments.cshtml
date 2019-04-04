@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AlbunesApp.Models.AlbumComments>
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h2>Comentarios del Album</h2>
+
+<div style="width:100%; height:80%; overflow:auto;">
+    <table class="table">
+        <tr>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.body)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.body)
+                </td>
+
+            </tr>
+        }
+
+
+    </table>
+</div>
+
+
+<div>  
+    <button class="btn btn-primary " type="button" onclick="history.back(-1)" > <strong>Volver</strong></button>
+</div>

@@ -50,9 +50,8 @@
                     }
                 },
                 {
-                    "data": "albumId", "autoWidth": true, "render": function (data) {                       
-                        // var url = '/Home/CommentsList/' + data; 
-                         return '<a class="btn btn-primary" href="#"><strong>Ver Comentarios</strong></a>';                        
+                    "data": "albumId", "autoWidth": true, "render": function (data) {  
+                         return '<a class="btn btn-primary"><strong>Ver Comentarios</strong></a>';                        
                     }
                 }
             ]        
@@ -71,11 +70,11 @@
                         if (res.data !== null) {
            
                             var number_of_rows = res.data.length;
-                            var number_of_cols = 3;                     
-
+                            var number_of_cols = 3;  
 
                             // Se crea de forma dinamica la tabla de comentarios   
-                            var table_body = '<table class="table own-table"> <thead> <tr> <th scope="col">Nombre</th> <th scope="col">Email</th> <th scope="col">Descripción</th> </tr > </thead > <tbody>';
+                            var tableTitle = '<h3>Comentarios del Album</h3>';
+                            var table_body = tableTitle + '<table class="table own-table"> <thead> <tr> <th scope="col">Nombre</th> <th scope="col">Email</th> <th scope="col">Descripción</th> </tr > </thead > <tbody>';
 
                             for (var i = 0; i < number_of_rows; i++) {
                                 table_body += '<tr>';
@@ -102,6 +101,7 @@
                             $('#tableDiv').html(table_body);                       
                              
                             toastr.success("Puede chequear los comentarios..!!", 'Exito: ', { positionClass: 'toast-bottom-right' });
+                            $("html, body").animate({ scrollTop: $(document).height() }, 2000);
                         } else {
                             toastr.error("Ocurrio  un error al consultarl los comentarios", 'Error', { positionClass: 'toast-bottom-right' });
                         }

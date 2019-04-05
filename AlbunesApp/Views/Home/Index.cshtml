@@ -2,11 +2,14 @@
 @{
     ViewBag.Title = "Home Page";
     var albumsList = (IEnumerable<SelectListItem>)ViewBag.AlbumsList;
+
 }
 
 
 
 <div class="own-container">
+
+
 
     <div class="row">
         <div class="col-md-4">
@@ -29,32 +32,41 @@
         <div class="col-md-12">
 
             <div class="own-container">
-           
-                <div class="card-body">
-                    <div class="tablecontainer">
-                        <table id="myDatatable" class="display" cellspacing="0" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th data-priority="1">Titulo</th>
-                                    <th>Imagen</th>                                 
-                                    <th data-priority="1">Acciones</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    
 
-                    </div>
-                </div>
+                <table id="myDatatable" class="display" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">Titulo</th>
+                            <th>Imagen</th>
+                            <th data-priority="1">Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+
             </div>
-
-
-
 
         </div>
     </div>
 
 
+    <div class="row" >
+        <div class="col-md-12">
+          
+            <div class="own-container">
+
+                <div id="tableDiv">
+                   
+                </div>
+
+            </div>           
+               
+         
+        </div>
+    </div>
+
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

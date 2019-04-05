@@ -18,11 +18,19 @@ namespace AlbunesApp.Controllers
 
             var albums = await service.AlbumsListAsync();
 
-            ViewBag.AlbumsList = albums.Select(c => new SelectListItem
+            ViewBag.AlbumsList = albums.Take(5).Select(c => new SelectListItem
             {
                 Value = c.id.ToString(),
                 Text = c.title
             }).ToList();
+
+
+            //List<AlbumComments> albumCommentsList = new List<AlbumComments>();
+            //albumCommentsList = await service.AlbumsCommentsListAsync();
+            //albumCommentsList = albumCommentsList.Where(x => x.postId == 1).ToList();
+            //ViewBag.CommentsPartial = albumCommentsList;
+
+
 
             return View();
         }
@@ -37,14 +45,28 @@ namespace AlbunesApp.Controllers
         }
 
 
-        public async Task<ActionResult> Comments(int id)
-        {
-            List<AlbumComments> albumCommentsList = new List<AlbumComments>();            
-            albumCommentsList = await service.AlbumsCommentsListAsync();
-            albumCommentsList = albumCommentsList.Where(x => x.postId == id).ToList();
-            return View(albumCommentsList);
-        }
+        //public async Task<ActionResult> _Comments(int id)
+        //{
+        //    List<AlbumComments> albumCommentsList = new List<AlbumComments>();
+        //    albumCommentsList = await service.AlbumsCommentsListAsync();
+        //    albumCommentsList = albumCommentsList.Where(x => x.postId == id).ToList();
+        //    ViewBag.CommentsPartial = albumCommentsList;
+        //    return PartialView(albumCommentsList);
+        //}
 
+
+
+        public async Task<JsonResult> CommentsList(int id)
+        {
+            List<AlbumComments> albumCommentsList = new List<AlbumComments>();
+        
+            albumCommentsList = await service.AlbumsCommentsListAsync();
+            if (albumCommentsList != null)
+            {
+                albumCommentsList = albumCommentsList.Where(x => x.postId == id).ToList();
+            }           
+            return Json(new { data = albumCommentsList }, JsonRequestBehavior.AllowGet);
+        }
 
 
         public ActionResult About()

@@ -2,19 +2,16 @@
 
     var albumsSelect = $('#albumsSelect');
     var visualizarButton = $('#visualizarButton');
-
-
-
+       
 
     visualizarButton.click(() => {
 
-        var id = albumsSelect.val();
+        var id = albumsSelect.val();       
 
-        var oTable = $('#myDatatable').DataTable({
-            "bLengthChange": true,
-            "bDestroy": true,
-            responsive: true,
-            "order": [[0, "asc"]],
+        var oTable = $('#myDatatable').DataTable({        
+            "bDestroy": true,  
+            "bLengthChange": true,              
+            responsive: true,         
             language: {
                 processing: "Procesando",
                 search: "Buscar:",
@@ -47,18 +44,89 @@
             "columns": [
                 { "data": "title", "width": "50%" },
                 {
-                    "data": "thumbnailUrl", "autoWidth": true, "render": function (data) {                      
+                    "data": "thumbnailUrl", "autoWidth": true, "render": function (data) {
                         return '<img class="img-thumbnail" src="' + data + '">';
-                    }                        
+                    }
                 },
                 {
-                    "data": "albumId", "autoWidth": true, "render": function (data) {
-                        var url = '/Home/Comments/' + data;
-                        return '<a class="btn btn-table" href= ' + url + '><strong>Ver Comentarios</strong></a>';
+                    "data": "albumId", "autoWidth": true, "render": function (data) {                       
+                        // var url = '/Home/CommentsList/' + data; 
+                         return '<a class="btn btn-primary" href="#"><strong>Ver Comentarios</strong></a>';                        
                     }
                 }
-            ]
+            ]        
+
         });
 
-    });
+       
+        // Se captura el evento on click sobre el boton para visualizar los comentarios
+        $('#myDatatable tbody').on('click', 'a', function () {            
+            var data = $('#myDatatable').DataTable().row($(this).parents('tr')).data();    
+            if (data.albumId) {
+                var url = '/Home/CommentsList';
+
+                $.get(url, { id: data.albumId })
+                    .done(function (res) {                      
+                        if (res.data !== null) {
+           
+                            var number_of_rows = res.data.length;
+                            var number_of_cols = 3;                      
+
+
+                            // Se crea de forma dinamica la tabla de comentarios   
+                            var table_body = '<table class="table own-table"> <thead> <tr> <th scope="col">Nombre</th> <th scope="col">Email</th> <th scope="col">Descripción</th> </tr > </thead > <tbody>';
+
+                            for (var i = 0; i < number_of_rows; i++) {
+                                table_body += '<tr>';
+
+                                for (var j = 0; j < number_of_cols; j++) {
+
+                                    if (j === 0) {
+                                        table_body += '<td>';
+                                        table_body += res.data[i]["name"];
+                                        table_body += '</td>';
+                                    } else if (j === 1) {
+                                        table_body += '<td>';
+                                        table_body += res.data[i]["email"];
+                                        table_body += '</td>';
+                                    } else {
+                                        table_body += '<td>';
+                                        table_body += res.data[i]["body"];
+                                        table_body += '</td>';
+                                    }                                 
+                                }
+                                table_body += '</tr>';
+                            }
+                            table_body += ' </tbody></table>';
+                            $('#tableDiv').html(table_body);
+                             
+
+
+                            toastr.success("Puede chequear los comentarios..!!", 'Exito: ', { positionClass: 'toast-bottom-right' });
+                        } else {
+                            toastr.error("Ocurrio  un error al consultarl los comentarios", 'Error', { positionClass: 'toast-bottom-right' });
+                        }
+                    })
+                    .fail(function (res) {                 
+                        alert("Error: ocurrio un error con el servicio" + res.status + ": " + res.statusText);
+                     
+                    }); 
+
+              
+            }            
+        });
+
+        // Se limpia la tabla de comentarios
+        albumsSelect.change(() => {          
+            $('#tableDiv').html(" ");
+        });
+
+        
+
+    });  
+
+
+  
+
+
 });

@@ -10,8 +10,9 @@
 
         var oTable = $('#myDatatable').DataTable({        
             "bDestroy": true,  
-            "bLengthChange": true,              
-            responsive: true,         
+            "bLengthChange": true, 
+            responsive: true,    
+            "lengthMenu": [5, 10, 25, 50],
             language: {
                 processing: "Procesando",
                 search: "Buscar:",
@@ -70,7 +71,7 @@
                         if (res.data !== null) {
            
                             var number_of_rows = res.data.length;
-                            var number_of_cols = 3;                      
+                            var number_of_cols = 3;                     
 
 
                             // Se crea de forma dinamica la tabla de comentarios   
@@ -98,10 +99,8 @@
                                 table_body += '</tr>';
                             }
                             table_body += ' </tbody></table>';
-                            $('#tableDiv').html(table_body);
+                            $('#tableDiv').html(table_body);                       
                              
-
-
                             toastr.success("Puede chequear los comentarios..!!", 'Exito: ', { positionClass: 'toast-bottom-right' });
                         } else {
                             toastr.error("Ocurrio  un error al consultarl los comentarios", 'Error', { positionClass: 'toast-bottom-right' });
@@ -111,7 +110,6 @@
                         alert("Error: ocurrio un error con el servicio" + res.status + ": " + res.statusText);
                      
                     }); 
-
               
             }            
         });

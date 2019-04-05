@@ -24,14 +24,6 @@ namespace AlbunesApp.Controllers
                 Text = c.title
             }).ToList();
 
-
-            //List<AlbumComments> albumCommentsList = new List<AlbumComments>();
-            //albumCommentsList = await service.AlbumsCommentsListAsync();
-            //albumCommentsList = albumCommentsList.Where(x => x.postId == 1).ToList();
-            //ViewBag.CommentsPartial = albumCommentsList;
-
-
-
             return View();
         }
 
